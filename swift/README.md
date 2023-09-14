@@ -6,6 +6,7 @@
   - [Типы данных](#типы-данных)
     - [Основные](#основные)
     - [Opaque return types](#opaque-return-types)
+    - [Property wrapper](#property-wrapper)
   - [Операции](#операции)
   - [Условия](#условия)
   - [Циклы](#циклы)
@@ -91,7 +92,50 @@ func makeIvan() -> some Person {
 }
 ```
 
-Чаще всего используется, когда надо дать возможность собирать что-то из "блоков", например как в `View` в [SwiftUI](swiftui/README.md)
+Чаще всего используется, когда надо дать возможность собирать что-то из "блоков", например как в `View` в [SwiftUI](/swiftui/README.md)
+
+### Property wrapper
+
+Обертка свойств (swift 5.1) позволяет упростить код свойств, который может повторяться:
+
+```swift
+struct AppleSite {
+    @URL var url: String = "apple.com"
+}
+```
+
+Сделать это можно через `@propertyWrapper`:
+
+```swift
+@propertyWrapper
+struct URL {
+    private var url: String = ""
+    
+    var wrappedValue: String {
+        get { "https://" + url + "/" } // логика
+        set { url = newValue }
+    }
+    
+    init(wrappedValue: String = "") {
+        self.wrappedValue = wrappedValue
+    }
+
+    // можно написать методы и свойства ещё
+}
+```
+
+Теперь, если:
+
+```swift
+var site = AppleSite()
+print(site.url)
+```
+
+То вывод:
+
+```
+https://apple.com/
+```
 
 ## Операции
 
