@@ -12,6 +12,7 @@
   - [Циклы](#циклы)
   - [Функции](#функции)
   - [Классы, структуры, перечисления](#классы-структуры-перечисления)
+    - [Subscript](#subscript)
 
 # swift
 
@@ -239,9 +240,7 @@ print(fullInfo(with: "Ivan", age: &a))
 
 | Reference types | Value types |
 |-|-|
-| `class` | `struct`, `enum`, *tuple* | 
-
-
+| `class` | `struct`, `enum`, *tuple* |  
 
 **Свойства**
 
@@ -290,3 +289,19 @@ var title: String {
 Если нужно, чтобы нельзя было переписать через `override` инициализатор, можно написать `required`, `final` может наложить запрет на переопределение у методов и свойств
 
 *Динамическая диспетчеризация* – прием, при котором система выбирает реализацию одного метода (`полиморфизм`)
+
+### Subscript
+
+`subscript` позволяет обращаться к экземпляру типа через квадратные скобки, как в массивах.
+
+```swift
+struct Table {
+    var multiplier: Int
+    subscript(index: Int) -> Int {
+        return multiplier * index
+    }
+}
+
+var table = Table(multiplier: 5)
+print(table[4]) // 5 * 4 = 20
+```
